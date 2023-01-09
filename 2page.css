@@ -1,9 +1,0 @@
-.input_area{
-  width: 1200px;
-  height: 1180px;
-  background-color: rgba(0, 0, 0, 0.659);
-  position: relative; left:10px; top: -70px; z-index: 1;
-  display:flex;
-  margin-top: -1120px;
-  margin-left: 600px;
-}
