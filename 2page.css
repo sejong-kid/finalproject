@@ -30,7 +30,7 @@ body {
 .btn_link{
   float: left;
   display: flex;
-  margin-top: 240px;
+  margin-top: 320px;
   margin-left: 30px;
 }
 .link_home ,
@@ -150,33 +150,33 @@ th:first-child, td:first-child {
   display: inline-block;
 }
 .paging_box{
-  float: left;
+  margin-top: 10px;
 }
 .paging_list svg{
   scale: 90%;
   margin-top: -10px;
 }
-ul {
+.paging_list {
+  color: white;
+}
+.paging_list ul {
 	list-style:none;
 	float:left;
 	display:inline;
 }
-ul li {
+.paging_list ul li {
 	float:left;
 }
-ul li a {
+.paging_list ul li a {
 	float:left;
 	padding:4px;
 	margin-right:20px;
 	width:15px;
-	color:#000;
-	font:bold 12px tahoma;
-	border:1px solid #eee;
+	color:rgb(139, 139, 139);
+	font: 20px tahoma;
 	text-align:center;
 	text-decoration:none;
 }
-ul li a:hover, ul li a:focus {
-	color:#fff;
-	border:1px solid #f40;
-	background-color:#f40;
+.paging_list ul li a:hover, ul li a:focus {
+	color:#f40;
 }
