@@ -1,0 +1,130 @@
+body{
+  margin: 0 auto;
+}
+header {
+  margin: 0 auto;
+  height: 60px;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0);
+  font-weight: bold;
+  display: block;
+  justify-content: space-around;
+  align-items: center;
+  width: 600px;
+}
+/* 상단 검색창 */
+input:focus {outline: none;} /* outline 테두리 없애기 */
+
+/* 검색창 전체 스타일 */
+.Search_Zone{
+  display: inline;
+  width: 300px;
+  padding-left: 49px;
+  padding-right: 35px;
+  padding-top: 23px;
+  padding-bottom: 22px;
+  background: linear-gradient(-225deg, #3D4E81 0%, #5753C9 48%, #6E7FF3 100%) fixed;
+  border-radius: 20px;
+  box-shadow: 3px 3px 10px rgb(0 0 0 / 47%);
+}
+
+/* select, input 영역 */
+.Search_box{
+  display:inline-block;
+  /* box-shadow: 1px 1px 3px rgb(128, 128, 128); */
+}
+
+/* drop down 영역 */
+.drop_nav{
+  display: inline-flex;
+  position: absolute;
+  align-items: center;
+  padding-top: 16px;
+  margin-left: -10px;
+}
+/* drop down 바깥 */
+select{
+  border: none;
+  background-color: rgba(240, 248, 255, 0);
+  color: rgb(255, 255, 255);
+}
+/* drop down 내부 */
+.select option{
+  background: rgba(255, 255, 255, 0);
+  color:#000000;
+  height: 30px;
+  font-size: 16px;
+}
+/* 검색창 */
+/* 검색창 내부 */
+.Search_input{
+  line-height: 60px;
+  margin-left: 120px;
+  padding-left: 30px;
+  width: 400px;
+  height: 50px;
+  font-size: 20px;
+  color: white;
+  border: none;
+  background-color: rgba(255, 255, 255, 0);
+}
+/* 검색창 외부 글씨 */
+input::placeholder{
+  color: rgba(255, 255, 255, 0.742);
+}
+/* 돋보기 아이콘 */
+.Search_icon{
+  position:relative;
+  background-color: rgba(255, 255, 255, 0);
+  border: none;
+  text-decoration: none;  
+}
+svg {
+  margin-bottom: -5px;
+}
+
+/* 검색창 테두리 제거 */
+a:link {
+  color : rgb(2, 2, 2);
+}
+a:visited {
+  color : rgb(0, 0, 0);
+}
+a:active {
+  color : rgb(0, 0, 0)
+}
+a{
+  text-decoration-line: none;
+}
+/* 검색 결과 안내 텍스트 */
+/* 배경 */
+.Search_text{
+  background-color: hsla(0, 0%, 0%, 0);
+  border-radius: 20px 0px 0px 20px;
+  margin-top: 30px;
+  margin-left: 50px;
+  width: 70%;
+  height: 50px;
+  display: none; 
+  position: absolute;
+}
+/* 텍스트 */
+.Search_text span{
+  letter-spacing: 2px;
+  color: rgb(0, 0, 0);
+  font-size: 25px;
+  font-family: 'NanumSquareNeo-Variable';
+}
+
+.jsspan{
+  text-align: center;
+  width: 300px;
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-left: -30px;
+  margin-right: 20px;
+  height: 30px;
+  border-radius: 10px;
+  background-color: rgb(255, 244, 93);
+}

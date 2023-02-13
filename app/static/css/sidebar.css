@@ -1,0 +1,133 @@
+/* 사이드바 css 영역 */
+
+/* 사이드바 바디 */
+.side_bar {
+  left: 0;
+  display: flex;
+  position: absolute;
+  width: 250px;
+  height: 100%;
+  background: #4d5bf9;
+  /* box-shadow: -10px 0px 50px -15px rgba(0, 0, 0, 0.699) inset; */
+}
+
+/* 사이드바 뼈대 */
+.side_bar_list_background{
+  margin-top: 150px;
+  margin-left: 30px;
+  position: absolute;
+}
+
+/* 사이드바 버튼속성 */
+.side_bar_list_background button{
+  border-radius: 20px 0px 0px 20px;
+  border: none;
+  background-color: #ffffff00;
+}
+
+/* 사이드바 클릭시 배경 유지 */
+.side_bar_list_background li.active{
+  background-color: white;
+  width: 230px;
+}
+.side_bar_list_background li.active span{
+  color: rgb(0, 0, 0);
+}
+
+/* Titel text: 충녕이 */
+.list_title {
+  padding: 20px;
+}
+.list_title span {
+  width: 230px;
+  height: 100px;
+  font-size: 50px;  
+  font-family:'GyeonggiBatang';
+  letter-spacing: 10px;
+  color: white;
+}
+/* Side bar menu text */
+li{
+  list-style: none;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  margin-top: 50px;
+  display: flex;
+  height: 100px;
+}
+.list_sub span{
+  display: block;
+  font-size: 30px;
+  color: rgb(255, 255, 255);
+  background-color: none;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+}
+
+/* 메뉴 클릭시 텍스트 오른쪽 위, 아래 border radius 효과 */
+/* 각각 주는 이유는 각 class마다 width, heigh, margin 등이 달라서 */
+
+/* 충녕이 */
+.side_bar_list_background li b:nth-child(1){
+  position: absolute;
+  top: -140px;
+  height: 20px;
+  width: 100%;
+  background: white;
+  display: none;
+}
+.side_bar_list_background li b:nth-child(1)::before{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 220px;
+  height: 100%;
+  border-bottom-right-radius: 30px;
+  background-color: #4d5bf9;
+}
+.side_bar_list_background li b:nth-child(2){
+  position: absolute;
+  bottom: 480px;
+  height: 20px;
+  width: 100%;
+  background: white;
+  display: none;
+}
+.side_bar_list_background li b:nth-child(2)::before{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 220px;
+  height: 100%;
+  border-top-right-radius: 30px;
+  background-color: #4d5bf9;
+}
+.side_bar_list_background li.active b:nth-child(1),
+.side_bar_list_background li.active b:nth-child(2)
+{
+  display: block;
+}
+/* 채용 및 모집 */
+.side_menu_one li b:nth-child(1){
+  top: 60px;
+}
+.side_menu_one li b:nth-child(2){
+  bottom: 280px;
+}
+/* 참여 */
+.side_menu_two li b:nth-child(1){
+  top: 210px;
+}
+.side_menu_two li b:nth-child(2){
+  bottom: 130px;
+}
+/* 기타 */
+.side_menu_tre li b:nth-child(1){
+  top: 360px;
+}
+.side_menu_tre li b:nth-child(2){
+  bottom: -20px;
+}

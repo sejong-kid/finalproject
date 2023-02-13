@@ -20,11 +20,14 @@
       </div>
       <div class="Search_Zone">
         <div class="Search_box">
-          <form action="/page2/">
-          <input class="Search_input" type="text" name="key" placeholder="{{key}}" value="{{key}}">
+          <form action="/search/">
+          <input class="Search_input" type="text" id='search_input' name="key" placeholder="{{key}}" value="{{key}}">
+          <input type="hidden" name="category" value="{{category}}" id="category">
+          <input type="hidden" name="mode" value="title" id="category">
+          <input type="checkbox" name="mode" value="content" >
           <button class="Search_icon" type="submit">
           </form>
-            <a href="2page.html">
+          <a href="2page.html">
               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24"
                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
                 stroke-linejoin="round">
@@ -89,59 +92,27 @@
         </a>
       </div>
     </div>
-    <div class="result_text">
-      "{{key}}"에 관한 총 {{cases}} 건의 검색 결과입니다
+    <div class="result_text" id="search_num">
+      검색중<img src="{% static 'gif/Spinner-1s-200px.gif'%}" >
     </div>
     <div class="output">
       <div class="op_list">
         <div class="op_table">
           <table class="list_table">
-            <th width="50">순번</th>
-            <th width="700">제목</th>
-            <th width="150">날짜</th>
-            <th width="300">수집처</th>
-            {% for i in page_obj %}
-
-            <tr>
-              <td>{{i.article_num}}</td>
-              <td>
-                <a href="{{i.href}}" target="_blank"> 
-                {{i.title}}
-                </a>
-              </td>
-              <td>{{i.updated}}</td>
-              <td>{{i.writer}}</td>
-            </tr>
-            {% endfor %}
-        </div>
+            <thead>
+              <th width="50">순번</th>
+              <th width="700">제목</th>
+              <th width="150">날짜</th>
+              <th width="300">수집처</th>
+            </thead>
+            <tbody id="tbody">
+            </tbody>            
         </table>
       </div>
     </div>
     <div class="paging">
       <div class="paging_box">
-        <div class="paging_list">
-          <ul>
-          
-            <li><a href="?page={{before_page_num}}&key={{key}}">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24"
-                  height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                  <polyline points="15 6 9 12 15 18"></polyline>
-                </svg>
-              </a></li>
-            {% for page in paginator.page_range %}
-                <li><a href="?page={{page}}&key={{key}}" id = {{page}}>{{page}}</a></li>
-            {% endfor %}
-            <li><a href="?page={{after_page_num}}&key={{key}}">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right" width="24"
-                  height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                  <polyline points="9 6 15 12 9 18"></polyline>
-                </svg>
-              </a></li>
-          </ul>
+        <div class="paging_list" id = 'page_list'>
         </div>
       </div>
     </div>
@@ -149,9 +120,119 @@
   </div>
 </body>
 <script>
-  let page = location.search;
-  page = page.split('&')[0].split("=")[1]
-  document.getElementById(page).style.color = 'red'
-  // document.getElementById()
+if( `{{key}}`!='' & `{{category}}`!='all'){
+  console.log(12222)
+  console.log(document.getElementById('category'))
+}
+async function 함수(mode) {
+const list = await 리스트함수(mode);
+console.log(list)
+return list
+}
+function 리스트함수(mode) {
+ return new Promise((resolve, reject) => {
+ fetch(`/read_json/?key={{key}}&category={{category}}&mode={{mode}}`)
+.then(response => response.json())
+.then(data => {
+let cord = ''
+  for (record of data.slice(0,10)){
+  cord += '<tr>'
+    cord+=`<td>${record['article_num']}</td>`
+    cord+=`<td><a href = ${record['href']} target='_blank'>${record['title']}</a></td>`
+    cord+=`<td>${record['updated']}</td>`
+    cord+=`<td>${record['writer']}</td>`
+  cord += '</tr>'
+}
+document.getElementById('tbody').innerHTML = cord
+document.getElementById('search_num').innerHTML = `<b>{{key}}</b>에 관한 총 ${data.length}건의 검색결과 입니다`
+console.log("{{category}}")
+if ( "{{category}}"){
+  document.getElementById('search_num').innerHTML = `<b>{{cate_key}} </b> 카테고리에 관한 총 ${data.length}건의 검색결과 입니다`
+}
+if (mode=='first'){
+    let len = data.length
+    if (len > 100){
+      let page_cord = ''
+      for ( let i = 1; i<=10; i++){
+        page_cord += `<button onclick='page_change(${i})' id='button_${i}'>${i}</button>`
+      }
+      page_cord += `<button onclick='next_sector(11)'>다음으로</button>`
+
+      document.getElementById('page_list').innerHTML = page_cord
+    }else{
+      let page_cord = ''
+      for ( let i = 1; i<=parseInt(len/10); i++){
+        page_cord += `<button onclick='page_change(${i})' id='button_${i}'>${i}</button>`
+      }
+      document.getElementById('page_list').innerHTML = page_cord
+    }}
+resolve(data);
+});
+});
+}
+let data =함수('first')
+function next_sector(next){
+  page_num=Number(next)
+  let cord = ''
+  data.then((res)=>{
+  for (i of res.slice(10*(page_num-1),10*(page_num))){
+    cord += '<tr>'
+    cord+=`<td>${i['article_num']}</td>`
+    cord+=`<td><a href = ${i['href']}>${i['title']}</a></td>`
+    cord+=`<td>${i['updated']}</td>`
+    cord+=`<td>${i['writer']}</td>`
+    cord += '</tr>'
+  }
+  let page_cord = ''
+  page_cord += `<button onclick='before_sector(${page_num-1})'>이전으로</button>`
+      for ( let i = 1; i<=10; i++){
+        page_cord += `<button onclick='page_change(${page_num-1+i})' id='button_${page_num-1+i}'>${page_num-1+i}</button>`
+      }
+      page_cord += `<button onclick='next_sector(${page_num+10})'>다음으로</button>`
+
+      document.getElementById('page_list').innerHTML = page_cord
+  document.getElementById('tbody').innerHTML = cord
+  })
+}
+function before_sector(before){
+  
+  page_num=Number(before)
+  let cord = ''
+  data.then((res)=>{
+  for (i of res.slice(10*(page_num-1),10*(page_num))){
+    cord += '<tr>'
+    cord+=`<td>${i['article_num']}</td>`
+    cord+=`<td><a href = ${i['href']}>${i['title']}</a></td>`
+    cord+=`<td>${i['updated']}</td>`
+    cord+=`<td>${i['writer']}</td>`
+    cord += '</tr>'
+  }
+  let page_cord = ''
+  if (page_num !=10){
+  page_cord += `<button onclick='before_sector(${page_num-10})'>이전으로</button>`}
+      for ( let i = 1; i<=10; i++){
+        page_cord += `<button onclick='page_change(${page_num-10+i})' id='button_${page_num-10+i}'>${page_num-10+i}</button>`
+      }
+      page_cord += `<button onclick='next_sector(${page_num+1})'>다음으로</button>`
+
+      document.getElementById('page_list').innerHTML = page_cord
+  document.getElementById('tbody').innerHTML = cord
+  })
+}
+function page_change(page_num){
+  page_num=Number(page_num)
+  let cord = ''
+  data.then((res)=>{
+  for (i of res.slice(10*(page_num-1),10*(page_num))){
+    cord += '<tr>'
+    cord+=`<td>${i['article_num']}</td>`
+    cord+=`<td><a href = ${i['href']}>${i['title']}</a></td>`
+    cord+=`<td>${i['updated']}</td>`
+    cord+=`<td>${i['writer']}</td>`
+    cord += '</tr>'
+  }
+  document.getElementById('tbody').innerHTML = cord
+})
+}
 </script>
 </html>

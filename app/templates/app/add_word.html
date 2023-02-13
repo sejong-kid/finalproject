@@ -1,0 +1,19 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="radio" name="mode" id="mode_title" value="title"><label for="mode_title">타이틀단어</label>
+        <input type="radio" name="mode" id ='mode_content' value="content"><label for="content_title">컨텐츠단어</label>
+        <div>당신이 추가할 단어를 입력하시오 
+            <input type="text" name ='word'>
+        </div>
+        <button type="submit">제출</button>
+    </form>
+</body>
+</html>

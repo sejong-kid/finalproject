@@ -1,77 +1,638 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- 자바스크립트 연결 링크는 하단에 위치함 -->
+<!-- 각 영역별로 css 파일을 달리함 -->
+<!-- 원페이지로 작업하여서 코드가 길으니, div 영역별로 접어서 작업하길 권장함 -->
+<!-- 해당 html은 크롬 기준 확대/축소 100%에 맞춰서 작업됨 -->
 {% load static %}
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{% static '/css/index.css' %}">
-  <link rel="stylesheet" href="{% static '/css/font.css' %}" >
-  <title>Document</title>
+  <link rel="stylesheet" href="{% static '/css/style.css' %}">
+  <link rel="stylesheet" href="{% static '/css/sidebar.css' %}">
+  <link rel="stylesheet" href="{% static '/css/text_area.css' %}">
+  <link rel="stylesheet" href="{% static '/css/category_1.css' %}">
+  <link rel="stylesheet" href="{% static '/css/font.css' %}">
+  <link rel="stylesheet" href="{% static '/css/pageing.css' %}">
+  <link rel="stylesheet" href="{% static '/css/load.css' %}">
+  <title>충녕AI</title>
 </head>
-
-<body>
-  <div class="body">
-    <div class="Title_Zone">
-      <div class="main_title">
-        AI 충녕이
+<!-- oncontextmenu='return false' onselectstart='return false' ondragstart='return false' -->
+<!-- 드레그 방지, 우클릭 방지 기타 등등 방지하는 명령어  -->
+<body oncontextmenu='return false' onselectstart='return false' ondragstart='return false'>
+  <!-- sidebar.css -->
+  <div class="side_bar">
+    <div class="side_bar_list_background">
+      <!-- 충녕이 li 클래스 명 띄어쓰기 주의 -->
+      <!-- 버튼 클릭시 배경 변경 유지 영상 참고하여 작성함 -->
+      <!-- https://www.youtube.com/watch?v=P_A2kNpyQBs -->
+      <li class="list active" id="list_title" style="margin-bottom: 100px; margin-top: -121px;" onclick="go_index()">
+        <b></b>
+        <b></b>
+        <!-- 아래의 온클릭은 sidebar_click.js 에서 수정 -->
+        <button class="list_title" type="button" onclick="go_index()">
+          <span> 충녕봇 </span>
+        </button>
+      </li>
+      <div class="side_menu_one" onclick='click_category("채용")'>
+        <li class="list" id="채용및모집" onclick='click_category("채용")'>
+          <b></b>
+          <b></b>
+          <button class="list_sub" type="button" onclick='click_category("채용")'>
+            <span> 채용 및 모집 </span>
+          </button>
+        </li>
       </div>
-      <div class="sub_title_1">
-        당신이 원하는 세종시의 공지사항
+      <div class="side_menu_two" onclick='click_category("청소년")'>
+        <li class="list" id="참여" onclick='click_category("청소년")'>
+          <b></b>
+          <b></b>
+          <button class="list_sub" type="button" onclick='click_category("청소년")'>
+            <span> 참여 </span>
+          </button>
+        </li>
       </div>
-    </div>
-    <div class="Cg_Zone">
-      <div class="cg_list">
-        <div class="cg_colum_1">
-          <li class="column_1">
-            <button> {column_1} </button>
-        </div>
-        <div class="cg_colum_2">
-          <li class="column_2">
-            <button> {column_2} </button>
-        </div>
-        <div class="cg_colum_3">
-          <li class="column_3">
-            <button> {column_3} </button>
-        </div>
-        <div class="cg_colum_4">
-          <li class="column_4">
-            <button> {column_4} </button>
-        </div>
-        <div class="cg_colum_5">
-          <li class="column_5">
-            <button> {column_5} </button>
-        </div>
+      <div class="side_menu_tre" onclick='click_category("의회_시청일정")'>
+        <li class="list" id="기타" onclick='click_category("의회_시청일정")'>
+          <b></b>
+          <b></b>
+          <button class="list_sub" type="button" onclick='click_category("의회_시청일정")'>
+            <span> 기타 </span>
+          </button>
         </li>
       </div>
     </div>
-    <!-- 검색창 -->
-    <div class="Search_Zone">
-      <div class="Search_box">
-        <form action = '/page2/'>
-        <input class="Search_input" type="text" name = 'key' placeholder="검색어를 입력해주세요">
-        <button class="Search_icon" type="submit">
-          <a href="2page.html">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24"
-              viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-              stroke-linejoin="round">
-              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-              <circle cx="10" cy="10" r="7"></circle>
-              <line x1="21" y1="21" x2="15" y2="15"></line>
-            </svg>
-          </a>
-        </button>
-      </form>
-      </div>
-    </div>
-    <div class="bot_Zone">
-      <div class="ai_bot">
-        <img src="{% static '/gif/충녕이.gif' %}" alt="">
-      </div>
-    </div>
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script type="text/javascript" src="{% static '/js/Cg_Zone.js'%}"></script>
   </div>
+  <!-- style.css -->
+  <div class="serch_bar">
+    <header class="header">
+      <nav>
+        <h1></h1>
+        <form action='/search/'>
+          <div class="Search_Zone">
+            <div class="Search_box">
+              <div class="drop_nav">
+                <select class="select" name="search_period" id='search_period'>
+                  <option value="3달이내">기간선택</option>
+                  <option value="1주이내">1주이내</option>
+                  <option value="1달이내">1달이내</option>
+                  <option value="1년이내">1년이내</option>
+                  <option value="1년이후">1년이후</option>
+                  <option value="전체">전체기간</option>
+                </select>
+                <select class="select" name="search_mode" style="margin-left: 10px;" id="search_mode">
+                  <option value="title">제목</option>
+                  <option value="content">내용</option>
+                </select>
+              </div>
+              <!-- placeholder = 검색창 바깥 텍스트 -->
+              <!-- autocomplete = 자동완성 기능 관련 명령어 -->
+              <input class="Search_input" type="text" name='key' id="search_key" placeholder="검색어를 입력해주세요"
+                autocomplete='off' />
+              <!-- onclick="serchbtn()" 해당 온클릭은 text_area.js 에서 수정 -->
+              <button class="Search_icon" type='submit' onclick="serchbtn()">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24"
+                  height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                  stroke-linecap="round" stroke-linejoin="round" style="color: white;">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <circle cx="10" cy="10" r="7"></circle>
+                  <line x1="21" y1="21" x2="15" y2="15"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </form>
+      </nav>
+    </header>
+  </div>
+  <!-- text_area.css -->
+  <div class="text_area" id="door">
+    <div class="main_door">
+      <div class="info">
+        <span>
+          충녕봇 소개
+        </span>
+        <hr />
+        <p class="img" style="line-height: 45px;">
+          세종시 각 기관들의 공지사항을
+          <br> 검색 한 번으로 보실 수 있습니다.
+          <br> 원하는 정보를 찾기 위해
+          <br> 여기저기 돌아다닐 필요없이
+          <br> 이 곳에서 검색해 보세요!
+          <img src="{% static 'gif/충녕이.gif' %}" style="width:100%; height:100%; object-fit:cover;">
+        </p>
+      </div>
+      <div class="search_info_zone">
+        <span>
+          검색창
+        </span>
+        <hr />
+        <p style="font-weight: bold; margin-bottom: -25px;">세부검색 기능 </p>
+        <p style="line-height: 35px;">기간과 제목 또는 <br> 내용 선택 </p>
+      </div>
+      <div class="search_info_category">
+        <span>
+          카테고리
+        </span>
+        <hr />
+        <p style="font-weight: bold; margin-bottom: -25px;"> 상위 검색어 카테고리화</p>
+        <p style="line-height: 35px;"> 가장 많이 올라오는 <br>내용을 카테고리로 나눔</p>
+      </div>
+      <div class="program">
+        <span>
+          개발도구
+        </span>
+        <hr />
+        <p style="margin-bottom: -25px;"> python / django </p>
+        <p style="margin-bottom: -25px;"> html / css / javascript </p>
+        <p style="margin-bottom: -25px;"> notion / aws </p>
+      </div>
+      <div class="developer">
+        <span>
+          개발자
+        </span>
+        <hr />
+        <p style="margin-bottom: -25px;">배찬호 안용상</p>
+        <p style="margin-bottom: -25px;">최준호 선수영 최정웅</p>
+      </div>
+    </div>
+  </div>
+  <!-- sidebar.css -->
+  <div class="category_1" id="category1">
+    <div class="Search_text" id="serchtext">
+      <span id='search_num'>
+        {{key}} 에 대해 검색중
+        <p class="boxLoading"></p>
+      </span>
+    </div>
+    <div class="category_1_body">
+      <div class="category_1_btn" id="btn1">
+        <button class="category_names" id="채용" onclick='click_category("채용")'>채용</button>
+        <button class="category_names" id="업체모집" onclick='click_category("업체모집")'>업체모집</button>
+      </div>
+      <div class="category_1_btn" id="btn2">
+        <button class="category_names" id="청소년" onclick='click_category("청소년")' style="width: 130px;">청소년 교육</button>
+        <button class="category_names" id="주민자치교육" onclick='click_category("주민자치교육")' style="width: 200px;">주민자치 프로그램</button>
+        <button class="category_names" id="전문교육" onclick='click_category("전문교육")'>전문교육</button>
+        <button class="category_names" id='관람거리'onclick='click_category("관람거리")'>관람거리</button>
+        <button class="category_names" id='대회_공모전'onclick='click_category("대회_공모전")' style="width: 160px;">대회&공모전</button>
+        <button class="category_names" id='주민의견수렴'onclick='click_category("주민의견수렴")'>의견수렴</button>
+      </div>
+      <div class="category_1_btn" id="btn3">
+        <button class="category_names" id="의회_시청일정" onclick='click_category("의회_시청일정")' style="width: 200px;">의회 및 시청일정</button>
+        <button class="category_names"id='합격_당첨결과' onclick='click_category("합격_당첨결과")' style="width: 200px;">합격 & 당첨</button>
+      </div>
+      <table class="list_table" id="list_table">
+
+      </table>
+      <!-- pageing.css -->
+      <div class="paging">
+        <div class="paging_box">
+          <div class="paging_list" id='page_list'>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- javascript 영역 -->
+  <script type="text/javascript" src="{% static '/js/sidebar_click.js'%}"></script>
+  <script type="text/javascript" src="{% static '/js/text_area.js'%}"></script>
 </body>
 
 </html>
+<script>
+  async function 함수(js_mode, search, key, search_mode, search_period) {
+    const list = await 리스트함수(js_mode, search, key, search_mode, search_period);
+    console.log(list)
+    return list
+  }
+  let sub_str_num = 36
+  function 리스트함수(js_mode, search, key, search_mode, search_period) {
+    let url = ''
+    if (search == 'category') {
+      url = `/read_json/?category=${key}`
+    } else if (search == 'search') {
+      url = `/read_json/?key=${key}&mode=${search_mode}&search_period=${search_period}`
+    }
+    return new Promise((resolve, reject) => {
+      fetch(`${url}`)
+        .then(response => response.json())
+        .then(data => {
+          let cord = ''
+          cord += `<thead>
+          <th width="70">순번</th>
+          <th width="500">제목</th>
+          <th width="100">날짜</th>
+          <th width="300">수집처</th>
+        </thead>
+        <tbody id="list_table">`
+          for (record of data.slice(0, 10)) {
+            cord += '<tr>'
+            cord += `<td style="width: 70px;">${record['article_num']}</td>`
+            cord += `<td style="width: 500px;"><a title="" href = ${record['href']} target='_blank'>${record['title'].substr(0, sub_str_num)}</a></td>`
+            cord += `<td style="width: 100px;">${record['updated']}</td>`
+            cord += `<td style="width: 300px;">${record['writer']}</td>`
+            cord += '</tr>'
+          }
+          cord += `</tbody>`
+          console.log('url', url)
+          console.log(cord, 'cord')
+          document.getElementById('list_table').innerHTML = cord
+          let 제목내용 = ''
+          if (search_mode == 'title') {
+            제목내용 = '제목'
+          } else {
+            제목내용 = '내용'
+          }
+          if (search == 'category') {
+            document.getElementById('search_num').innerHTML = `<b>${key} </b> 카테고리에 관한 총 ${data.length}건의 조회결과 입니다`
+          } else if (search == 'search') {
+            if (key == '') {
+              document.getElementById('search_num').innerHTML = ` <span class="jsspan"> [${search_period}] </span> <b>전체 공지사항 총 ${data.length}건`
+            } else {
+              document.getElementById('search_num').innerHTML = ` <span class="jsspan"> [${search_period}][${제목내용}] </span> <b>${key}</b>에 관한 총 ${data.length}건의 검색결과 입니다 `
+            }
+          }
+          if (js_mode == 'first') {
+            let len = data.length
+            let max_len = parseInt(len / 10 + 1)
+            console.log(max_len)
+            if (len > 100) {
+              let page_cord = `<div class="page"><ul class="pagination modal" id="page_list">
+                  <li> <a href="#" class="first" onclick='first_page()'>처음 페이지</a></li><li> <a href="#" class="arrow left"> << </a>`
+              page_cord += `<li><a href='#' class='active num' onclick='page_change(1)' id='button_1'>1</a></li>`
+              for (let i = 2; i <= 10; i++) {
+                page_cord += `<li><a href='#' class='num' onclick='page_change(${i})' id='button_${i}'>${i}</a></li>`
+              }
+              page_cord += `<li><a href='#' class='arrow_right' onclick='next_sector(11)'> >> </a></li>
+                    <li> <a href="#" class="last" onclick='last_page()'> 끝 페이지 </a></li> 
+                    </ul>
+                    </div>`
+
+              document.getElementById('page_list').innerHTML = page_cord
+            } else {
+              let page_cord = `<div class="page"><ul class="pagination modal" id="page_list">
+                      <li> <a href="#" class="first"onclick='first_page()'>처음 페이지</a></li><li> <a href="#" class="arrow left"> << </a>`
+              page_cord += `<li><a href='#' class='active num' onclick='page_change(1)' id='button_1'>1</a></li>`
+
+              for (let i = 2; i <= parseInt((len - 1) / 10) + 1; i++) {
+                page_cord += `<li><a href='#' class='num' onclick='page_change(${i})' id='button_${i}'>${i}</a></li>`
+              }
+              if (max_len < 11) {
+                page_cord += `<li><a href='#' class='arrow_right''> >> </a></li>
+                      <li> <a href="#" class="last" onclick='last_page()'> 끝 페이지 </a></li> 
+                      </ul>
+                      </div>`
+              } else {
+                page_cord += `<li><a href='#' class='arrow_right' onclick='next_sector(${page_num + 10})'> >> </a></li>
+                                  <li> <a href="#" class="last" onclick='last_page()'> 끝 페이지 </a></li> 
+                                  </ul>
+                                  </div>`}
+              document.getElementById('page_list').innerHTML = page_cord
+            }
+          }
+          resolve(data);
+        });
+    });
+  }
+  function click_category(name) {
+    location.href = `/search/?category=${name}&key=`
+  }
+  var bDisplay = true;
+  let data = ''
+  let backgrcl = "#51d170";
+  if ('{{search}}' == 'category') {
+    let category = '{{category}}'
+    for (i of document.getElementsByClassName('category_names')) {
+      i.style.backgroundColor = '#f5b443c5'
+    }
+    if (category == '채용' || category == '업체모집') {
+      Recruitment1()
+      for (i of document.getElementsByClassName('active')) {
+        i.classList.remove('active')
+      }
+      document.getElementById('채용및모집').classList.add('active')
+      document.getElementById(category).style.backgroundColor = backgrcl
+    }
+    else if (category == '주민의견수렴' || category == '청소년' || category == '관람거리' || category == '주민자치교육' || category == '전문교육' || category == '대회_공모전') {
+      Recruitment2()
+      for (i of document.getElementsByClassName('active')) {
+        i.classList.remove('active')
+      }
+      document.getElementById('참여').classList.add('active')
+      document.getElementById(category).style.backgroundColor = backgrcl
+
+    }
+    else if (category == '의회_시청일정' || category == '합격_당첨결과') {
+      Recruitment3()
+      for (i of document.getElementsByClassName('active')) {
+        i.classList.remove('active')
+      }
+      document.getElementById('기타').classList.add('active')
+      document.getElementById(category).style.backgroundColor = backgrcl
+
+    }
+
+    data = 함수(js_mode = 'first', 'category', category, '', '')
+
+  } else if ('{{search}}' == 'search') {
+
+    serchbtn()
+    for (i of document.getElementsByClassName('active')) {
+      i.classList.remove('active')
+    }
+    document.getElementById('list_title').classList.add('active')
+    if ('{{key}}' != '') {
+      document.getElementById('search_key').value = '{{key}}'
+    } else {
+      document.getElementById('search_key').placeholder = '검색어를 입력해주세요'
+
+    }
+
+    data = 함수('first', 'search', '{{key}}', '{{search_mode}}', '{{search_period}}')
+  }
+  console.log(data)
+  function next_sector(next) {
+    page_num = Number(next)
+    let cord = ''
+    cord += `<thead>
+          <th width="70">순번</th>
+          <th width="500">제목</th>
+          <th width="100">날짜</th>
+          <th width="300">수집처</th>
+        </thead>
+        <tbody id="list_table">`
+    data.then((res) => {
+      let max_len = parseInt((res.length - 1) / 10 + 1)
+      console.log(max_len)
+      for (i of res.slice(10 * (page_num - 1), 10 * (page_num))) {
+        cord += '<tr>'
+        cord += `<td style="width: 70px;">${i['article_num']}</td>`
+        cord += `<td style="width: 500px"><a href = ${i['href']}>${i['title'].substr(0, sub_str_num)}</a></td>`
+        cord += `<td style="width: 100px;">${i['updated']}</td>`
+        cord += `<td style="width: 300px;">${i['writer']}</td>`
+        cord += '</tr>'
+      }
+      cord += `</tbody>`
+      let page_cord = `<div class="page"><ul class="pagination modal" id="page_list">
+                  <li> <a href="#"  class="first"onclick='first_page()'>처음 페이지</a></li><li> <a href="#" onclick=before_sector(${page_num - 1}) class="arrow left"> << </a>`
+      page_cord += `<li><a href='#' class='active num' onclick='page_change(${page_num})' id='button_${page_num}'>${page_num}</a></li>`
+      for (let i = 2; i <= 10; i++) {
+        if (page_num - 1 + i <= max_len) {
+          page_cord += `<li><a href='#' class='num' onclick='page_change(${page_num - 1 + i})' id='button_${page_num - 1 + i}'>${page_num - 1 + i}</a></li>`
+        }
+      }
+      if (page_num + 10 > max_len) {
+        page_cord += `<li><a href='#' class='arrow_right''> >> </a></li>
+                      <li> <a href="#" class="last" onclick='last_page()'> 끝 페이지 </a></li> 
+                      </ul>
+                      </div>`
+      } else {
+        page_cord += `<li><a href='#' class='arrow_right' onclick='next_sector(${page_num + 10})'> >> </a></li>
+                                  <li> <a href="#" class="last" onclick='last_page()'> 끝 페이지 </a></li> 
+                                  </ul>
+                                  </div>`}
+      document.getElementById('page_list').innerHTML = page_cord
+      document.getElementById('list_table').innerHTML = cord
+    })
+  }
+  function before_sector(before) {
+    page_num = Number(before)
+    let cord = ''
+    cord += `<thead>
+          <th width="70">순번</th>
+          <th width="500">제목</th>
+          <th width="100">날짜</th>
+          <th width="300">수집처</th>
+        </thead>
+        <tbody id="list_table">`
+    data.then((res) => {
+      for (i of res.slice(10 * (page_num - 1), 10 * (page_num))) {
+        cord += '<tr>'
+        cord += `<td style="width: 70px;">${i['article_num']}</td>`
+        cord += `<td style="width: 500px"><a href = ${i['href']}>${i['title'].substr(0, sub_str_num)}</a></td>`
+        cord += `<td style="width: 100px;">${i['updated']}</td>`
+        cord += `<td style="width: 300px;">${i['writer']}</td>`
+        cord += '</tr>'
+      }
+      cord += `</tbody>`
+      let page_cord = `<div class="page"><ul class="pagination modal" id="page_list">
+                  <li> <a href="#"  class="first"onclick='first_page()'>처음 페이지</a></li><li>`
+      if (page_num != 10) {
+        page_cord += `<a href="#" onclick=before_sector(${page_num - 10}) class="arrow left"> << </a>`
+      } else {
+        page_cord += `<a href="#" class="arrow left"> << </a>`
+      }
+      for (let i = 1; i <= 9; i++) {
+        page_cord += `<li><a href='#' class='num' onclick='page_change(${page_num - 10 + i})' id='button_${page_num - 10 + i}'>${page_num - 10 + i}</a></li>`
+      }
+      page_cord += `<li><a href='#' class='active num' onclick='page_change(${page_num})' id='button_${page_num}'>${page_num}</a></li>`
+      page_cord += `<li><a href='#' class='arrow_right' onclick='next_sector(${page_num + 1})'> >> </a></li>
+                    <li> <a href="#" class="last" onclick='last_page()'> 끝 페이지 </a></li> 
+                    </ul>
+                    </div>`
+
+      document.getElementById('page_list').innerHTML = page_cord
+      document.getElementById('list_table').innerHTML = cord
+    })
+  }
+  function page_change(page_num) {
+    console.log(1)
+    page_num = Number(page_num)
+    let page_id = `button_${page_num}`
+    for (i of document.getElementsByClassName('num active')) {
+      i.classList.remove('active')
+    }
+    document.getElementById(page_id).classList.add('active')
+    let cord = ''
+    cord += `<thead>
+          <th width="70">순번</th>
+          <th width="500">제목</th>
+          <th width="100">날짜</th>
+          <th width="300">수집처</th>
+        </thead>
+        <tbody id="list_table">`
+    data.then((res) => {
+      for (i of res.slice(10 * (page_num - 1), 10 * (page_num))) {
+        cord += '<tr>'
+        cord += `<td style="width: 70px;">${i['article_num']}</td>`
+        cord += `<td style="width: 500px"><a href = ${i['href']}>${i['title'].substr(0, sub_str_num)}</a></td>`
+        cord += `<td style="width: 100px;">${i['updated']}</td>`
+        cord += `<td style="width: 300px;">${i['writer']}</td>`
+        cord += '</tr>'
+      }
+      cord += `</tbody>`
+      document.getElementById('list_table').innerHTML = cord
+    })
+  }
+  var bDisplay = true;
+  function Recruitment1(x) {
+    var con = document.getElementById("category1");
+    var von = document.getElementById("door")
+    var btn1 = document.getElementById("btn1")
+    var btn2 = document.getElementById("btn2")
+    var btn3 = document.getElementById("btn3")
+    var text = document.getElementById("serchtext")
+    if (con.style.display == 'none') {
+      con.style.display = 'block';
+      von.style.display = 'none';
+      btn1.style.display = 'block';
+      btn2.style.display = 'none';
+      btn3.style.display = 'none';
+      // text.style.display = 'none';
+    } else {
+      con.style.display = 'block';
+      von.style.display = 'none';
+      btn1.style.display = 'block';
+      btn2.style.display = 'none';
+      btn3.style.display = 'none';
+      // text.style.display = 'none';
+    }
+  }
+  function last_page() {
+    let cord = ''
+    cord += `<thead>
+          <th width="70">순번</th>
+          <th width="500">제목</th>
+          <th width="100">날짜</th>
+          <th width="300">수집처</th>
+        </thead>
+        <tbody id="list_table">`
+    data.then((res) => {
+      let max_len = parseInt((res.length - 1) / 10 + 1)
+      let page_num = parseInt((max_len) / 10) * 10
+      console.log(max_len)
+      console.log(page_num)
+      for (i of res.slice(10 * (max_len - 1), 10 * (max_len))) {
+        cord += '<tr>'
+        cord += `<td style="width: 70px;">${i['article_num']}</td>`
+        cord += `<td style="width: 500px"><a href = ${i['href']}>${i['title'].substr(0, sub_str_num)}</a></td>`
+        cord += `<td style="width: 100px;">${i['updated']}</td>`
+        cord += `<td style="width: 300px;">${i['writer']}</td>`
+        cord += '</tr>'
+      }
+      cord += `</tbody>`
+      let page_cord = `<div class="page"><ul class="pagination modal" id="page_list">
+        <li> <a href="#"  class="first"onclick='first_page()'>처음 페이지</a></li><li> <a href="#" onclick=before_sector(${page_num - 1}) class="arrow left"> << </a>`
+      for (let i = 2; i <= 10; i++) {
+        if (page_num - 1 + i < max_len) {
+          page_cord += `<li><a href='#' class='num' onclick='page_change(${page_num - 1 + i})' id='button_${page_num - 1 + i}'>${page_num - 1 + i}</a></li>`
+        }
+      }
+      page_cord += `<li><a href='#' class='active num' onclick='page_change(${max_len})' id='button_${max_len}'>${max_len}</a></li>`
+      if (page_num + 10 > max_len) {
+        page_cord += `<li><a href='#' class='arrow_right''> >> </a></li>
+                        <li> <a href="#" class="last" onclick='last_page()'> 끝 페이지 </a></li> 
+                      </ul>
+                      </div>`
+      } else {
+        page_cord += `<li><a href='#' class='arrow_right' onclick='next_sector(${page_num + 10})'> >> </a></li>
+                                  <li> <a href="#" class="last" onclick='last_page()'> 끝 페이지 </a></li> 
+                                  </ul>
+                                  </div>`}
+      document.getElementById('page_list').innerHTML = page_cord
+      document.getElementById('list_table').innerHTML = cord
+    })
+  }
+  function first_page() {
+    let cord = ''
+    cord += `<thead>
+          <th width="70">순번</th>
+          <th width="500">제목</th>
+          <th width="100">날짜</th>
+          <th width="300">수집처</th>
+        </thead>
+        <tbody id="list_table">`
+    let page_num = 1
+    data.then((res) => {
+      let max_len = parseInt(res.length / 10 + 1)
+      console.log(max_len)
+      for (i of res.slice(10 * (page_num - 1), 10 * (page_num))) {
+
+        cord += '<tr>'
+        cord += `<td style="width: 70px;">${i['article_num']}</td>`
+        cord += `<td style="width: 500px"><a href = ${i['href']}>${i['title'].substr(0, sub_str_num)}</a></td>`
+        cord += `<td style="width: 100px;">${i['updated']}</td>`
+        cord += `<td style="width: 300px;">${i['writer']}</td>`
+        cord += '</tr>'
+      }
+      cord += `</tbody>`
+      let page_cord = `<div class="page"><ul class="pagination modal" id="page_list">
+                  <li> <a href="#"  class="first"onclick='first_page()'>처음 페이지</a></li><li> <a href="#" onclick=before_sector(${page_num - 1}) class="arrow left"> << </a>`
+      page_cord += `<li><a href='#' class='active num' onclick='page_change(${page_num})' id='button_${page_num}'>${page_num}</a></li>`
+      for (let i = 2; i <= 10; i++) {
+        if (page_num - 1 + i <= max_len) {
+          page_cord += `<li><a href='#' class='num' onclick='page_change(${page_num - 1 + i})' id='button_${page_num - 1 + i}'>${page_num - 1 + i}</a></li>`
+        }
+      }
+      if (page_num + 10 > max_len) {
+        page_cord += `<li><a href='#' class='arrow_right''> >> </a></li>
+                      <li> <a href="#" class="last" onclick='last_page()'> 끝 페이지 </a></li> 
+                      </ul>
+                      </div>`
+      } else {
+        page_cord += `<li><a href='#' class='arrow_right' onclick='next_sector(${page_num + 10})'> >> </a></li>
+                                  <li> <a href="#" class="last" onclick='last_page()'> 끝 페이지 </a></li> 
+                                  </ul>
+                                  </div>`}
+      document.getElementById('page_list').innerHTML = page_cord
+      document.getElementById('list_table').innerHTML = cord
+    })
+  }
+  // 참여 클릭시 다른 div 숨기기
+
+  function Recruitment2(x) {
+    var con = document.getElementById("category1");
+    var von = document.getElementById("door")
+    var btn1 = document.getElementById("btn1")
+    var btn2 = document.getElementById("btn2")
+    var btn3 = document.getElementById("btn3")
+    var text = document.getElementById("serchtext")
+    if (con.style.display == 'none') {
+      con.style.display = 'block';
+      von.style.display = 'none';
+      btn1.style.display = 'none';
+      btn2.style.display = 'block';
+      btn3.style.display = 'none';
+      // text.style.display = 'none';
+    } else {
+      con.style.display = 'block';
+      von.style.display = 'none';
+      btn1.style.display = 'none';
+      btn2.style.display = 'block';
+      btn3.style.display = 'none';
+      // text.style.display = 'none';
+    }
+  }
+
+  // 기타 클릭시 다른 div 숨기기
+
+  function Recruitment3(x) {
+    var con = document.getElementById("category1");
+    var von = document.getElementById("door")
+    var btn1 = document.getElementById("btn1")
+    var btn2 = document.getElementById("btn2")
+    var btn3 = document.getElementById("btn3")
+    var text = document.getElementById("serchtext")
+    if (con.style.display == 'none') {
+      con.style.display = 'block';
+      von.style.display = 'none';
+      btn1.style.display = 'none';
+      btn2.style.display = 'none';
+      btn3.style.display = 'block';
+      // text.style.display = 'none';
+    } else {
+      con.style.display = 'block';
+      von.style.display = 'none';
+      btn1.style.display = 'none';
+      btn2.style.display = 'none';
+      btn3.style.display = 'block';
+      // text.style.display = 'none';
+    }
+  }
+
+// 충녕봇 클릭시 처음 화면으로
+
+
+</script>
